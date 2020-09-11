@@ -1,4 +1,15 @@
-<?php 
+<?php
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
+ */
+
 define('TAB_QUICKPAY_TRANSACTION','Quickpay Transaktion [%s]');
 define('QUICKPAY_AUTHORISED','godkendt');
 define('QUICKPAY_CAPTURED','gennemført');

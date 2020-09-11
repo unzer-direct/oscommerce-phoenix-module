@@ -1,11 +1,13 @@
 <?php
 /**
- * Quickpay v10+ php library v1.0
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
  *
- * This class implements the Quickpay api.
- * See testapi.php for usage.
+ * Copyright (c) 2020 osCommerce
  *
- * 30/03-2015: Implements the payment methods necessary for non-pci solutions.
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
  */
 
 include('QPConnectorInterface.php');

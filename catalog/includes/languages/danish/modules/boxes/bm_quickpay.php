@@ -1,14 +1,14 @@
 <?php
-/*
-  $Id$
-
-  osCommerce, Open Source E-Commerce Solutions
-  http://www.oscommerce.com
-
-  Copyright (c) 2010 osCommerce
-
-  Released under the GNU General Public License
-*/
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
+ */
 
 define('MODULE_BOXES_QUICKPAY_TITLE', 'Quickpay');
 define('MODULE_BOXES_QUICKPAY_DESCRIPTION', 'Vi modtager');   //means we accept

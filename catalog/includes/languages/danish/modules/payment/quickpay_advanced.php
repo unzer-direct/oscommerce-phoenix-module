@@ -1,14 +1,15 @@
 <?php
-/*
-  quickpay.php
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
+ */
 
-  The Exchange Project - Community Made Shopping!
-  http://www.theexchangeproject.org
-
-  Copyright (c) 2008 Jakob Høy Biegel
-
-  Released under the GNU General Public License
-*/
 define('MODULE_PAYMENT_QUICKPAY_ADVANCED_TEXT_TITLE', 'Kreditkort');
 define('MODULE_PAYMENT_QUICKPAY_ADVANCED_TEXT_PUBLIC_TITLE', 'Kreditkort');
 define('MODULE_PAYMENT_QUICKPAY_ADVANCED_TEXT_DESCRIPTION', 'Betalingen overføres elektronisk, ved betaling med');

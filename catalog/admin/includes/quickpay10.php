@@ -1,14 +1,15 @@
 <?php
-/*
-  quickpay10.php
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
+ */
 
-  osCommerce, Open Source E-Commerce Solutions
-  http://www.oscommerce.com
-
-Protocol 10 version Copyright (c) 2012 Kim L�vendahl
-  Released under the GNU General Public License
-
-*/
 if (!defined('TABLE_ORDERS')) define('TABLE_ORDERS', 'orders');
 
 function json_message($input){

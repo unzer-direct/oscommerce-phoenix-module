@@ -1,13 +1,13 @@
 <?php
-/*
-  version 1.0.0
-
-  osCommerce, Open Source E-Commerce Solutions
-  http://www.oscommerce.com
-
-  Copyright (c) 2017 osCommerce
-
-  Released under the GNU General Public License
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
  */
 
 /** Compatibility fixes */
@@ -188,8 +188,16 @@ include(DIR_FS_CATALOG.DIR_WS_CLASSES.'QuickpayApi.php');
                     $cost = (MODULE_PAYMENT_QUICKPAY_ADVANCED_AUTOFEE == "No" || $option == 'viabill' ? "0" : "1");
                     if($option=="creditcard"){
 
-						$msg .= "<div class='creditcard_pm_title'>".$this->get_payment_options_name($option)."</div>";
-						$msg .= "<br>";
+						$msg .= "<div class='creditcard_pm_title'>";
+
+                        /** Configuring the text to be shown for the payment group. If there is an input in the text field for that payment option, that value will be shown to the user, otherwise, the default value will be used.*/
+                        if(defined('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP'.$i.'_TEXT') && constant('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP' . $i . '_TEXT') != ''){
+                            $msg .= constant('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP' . $i . '_TEXT')."</div>";
+                        }else {
+                            $msg .= $this->get_payment_options_name($option)."</div>";
+                        }
+
+                        $msg .= "<br>";
 
 						$optscount++;
                         /** Read the logos defined on admin panel **/
@@ -282,12 +290,19 @@ include(DIR_FS_CATALOG.DIR_WS_CLASSES.'QuickpayApi.php');
                                 $h = 22;
                             }
 
+                            /** Configuring the text to be shown for the payment option. */
                             $options_text = '<table width="100%">
                                                 <tr style="background-color: transparent !important;border-top: 0 !important;">
                                                     <td style="background-color: transparent !important;border-top: 0 !important;">'.tep_image($icon,$this->get_payment_options_name($option),$w,$h,' style="position:relative;border:0px;float:left;margin:'.$space.'px;" ').'</td>
-                                                    <td style="height: 27px;white-space:nowrap;vertical-align:middle;background-color: transparent !important;border-top: 0 !important;" >' . $this->get_payment_options_name($option) . '</td>
-                                                </tr>
-                                            </table>';
+                                                    <td style="height: 27px;white-space:nowrap;vertical-align:middle;background-color: transparent !important;border-top: 0 !important;" >';
+
+                            /** If there is an input in the text field for that payment option, that value will be shown to the user, otherwise, the default value will be used. */
+                            if(defined('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP'.$i.'_TEXT') && constant('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP' . $i . '_TEXT') != ''){
+                                $options_text .= constant('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP' . $i . '_TEXT').'</td></tr></table>';
+                            }else {
+                                $options_text .= $this->get_payment_options_name($option).'</td></tr></table>';
+                            }
+
 
                             if($qty_groups==1){
                                 $selection = array(
@@ -836,7 +851,16 @@ include(DIR_FS_CATALOG.DIR_WS_CLASSES.'QuickpayApi.php');
             'desc' => 'Comma seperated Quickpay payment options that are included in Group '.$i.', maximum 255 chars (<a href=\'http://tech.quickpay.net/appendixes/payment-methods\' target=\'_blank\'><u>available options</u></a>)<br>Example: creditcard OR viabill OR dankort<br>',
           ]);
 
+          //Added a text field key for each payment group
+          $text_field = array('MODULE_PAYMENT_QUICKPAY_ADVANCED_GROUP'.$i.'_TEXT' => [
+            'title' => 'Group '.$i.' Payment Text',
+            'value' => '',
+            'desc' => 'Define text to be displayed for Group ' . $i . ' Payment Option. If this is not defined, the default text will be shown.<br>',
+          ]);
+
           $fields = array_merge($fields, $group_field);
+
+          $fields = array_merge($fields, $text_field);
       }
 
       return $fields;

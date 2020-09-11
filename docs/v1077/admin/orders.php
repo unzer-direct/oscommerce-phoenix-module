@@ -1,14 +1,14 @@
 <?php
-/*
-  $Id$
-
-  osCommerce, Open Source E-Commerce Solutions
-  http://www.oscommerce.com
-
-  Copyright (c) 2020 osCommerce
-
-  Released under the GNU General Public License
-*/
+/**
+ * osCommerce Phoenix, Open Source E-Commerce Solutions
+ * http://www.oscommerce.com
+ *
+ * Copyright (c) 2020 osCommerce
+ *
+ * Released under the GNU General Public License
+ *
+ * author: Genuineq office@genuineq.com
+ */
 
   require 'includes/application_top.php';
 
@@ -66,7 +66,7 @@
         $OSCOM_Hooks->call('orders', 'updateOrderAction');
 
         if ($order_updated == true) {
-         $messageStack->add_session(SUCCESS_ORDER_UPDATED, 'success');
+          $messageStack->add_session(SUCCESS_ORDER_UPDATED, 'success');
         } else {
           $messageStack->add_session(WARNING_ORDER_NOT_UPDATED, 'warning');
         }
