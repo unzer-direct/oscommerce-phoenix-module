@@ -15,6 +15,7 @@
  *
  * Singleton for easy retrieval of the Quickpay connector implementation.
  */
+
 class QPConnectorFactory {
 
     public static function getConnector() {

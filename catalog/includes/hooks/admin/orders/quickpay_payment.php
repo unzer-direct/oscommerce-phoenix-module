@@ -13,6 +13,7 @@
 // Add some things here to avoid editing application top
 include('includes/quickpay10.php');
 
+// 2.3.4BS Edge compatibility
 if (!defined('DIR_WS_CLASSES')) define('DIR_WS_CLASSES','includes/classes/');
 if (!defined('DIR_WS_IMAGES')) define('DIR_WS_IMAGES','images/');
 

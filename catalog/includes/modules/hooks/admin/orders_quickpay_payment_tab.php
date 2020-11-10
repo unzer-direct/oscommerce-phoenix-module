@@ -56,7 +56,7 @@ class hook_admin_orders_quickpay_payment_tab {
                     $amount = $operations[0]["amount"];
                     $ostatus['qpstat'] = $operations[0]["qp_status_code"];
                     $ostatus['type'] = $operations[0]["type"];
-                    $resttocap = $ostatus['amount'] -  $ostatus['balance'];
+                    $resttocap = $ostatus['amount'] - $ostatus['balance'];
                     $resttorefund = $statusinfo[0]["balance"];
                     $allowcapture = ($operations[0]["pending"] ? false : true);
                     $allowcancel = true;
@@ -247,8 +247,8 @@ function qp_check_capture(amount_big, amount_small, confirm_text) {
         return confirm("$capture_confirm");
     }
 }
-
 //--></script>
+
 <div class="tab-pane fade" id="section_quickpay_payment" role="tabpanel">
  $heading $form
  $errormsg $table
