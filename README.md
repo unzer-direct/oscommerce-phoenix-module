@@ -6,7 +6,7 @@ Version 1.0.2 - 28.10.2020
 
 Compatibility:
 Quickpay API v10 with
-- osCommerce Phoenix v1.0.7.7
+- osCommerce Phoenix v1.0.7.15
 
 Built by Genuineq (office@genuineq.com) from the existing quickpay payment module: https://github.com/QuickPay/oscommerce-module
 Version 1.0 sponsored by Quickpay.net

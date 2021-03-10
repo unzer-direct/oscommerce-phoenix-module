@@ -423,8 +423,9 @@ class quickpay_advanced extends abstract_payment_module {
             if(!isset($order->customer['suburb']))$order->customer['suburb']='';
             if(!isset($order->billing['suburb']))$order->billing['suburb']='';
             if(!isset($order->delivery['suburb']))$order->delivery['suburb']='';
-            require 'includes/modules/checkout/build_order_totals.php';
-            require 'includes/modules/checkout/insert_order.php';
+
+            require 'includes/system/segments/checkout/build_order_totals.php';
+            require 'includes/system/segments/checkout/insert_order.php';
 
             $_SESSION['cart_QuickPay_ID'] = $_SESSION['cartID'] . '-' . $order->get_id();
         }
@@ -597,6 +598,8 @@ class quickpay_advanced extends abstract_payment_module {
         global $order, $cart_QuickPay_ID;
 
         $order_id = substr($cart_QuickPay_ID, strpos($cart_QuickPay_ID, '-') + 1);
+        $order->set_id($order_id);
+
         $order_status_approved_id = (MODULE_PAYMENT_QUICKPAY_ADVANCED_ORDER_STATUS_ID > 0 ? (int) MODULE_PAYMENT_QUICKPAY_ADVANCED_ORDER_STATUS_ID : (int) DEFAULT_ORDERS_STATUS_ID);
 
         $mode = (MODULE_PAYMENT_QUICKPAY_ADVANCED_SUBSCRIPTION == "Normal" ? "" : "1");
@@ -609,9 +612,17 @@ class quickpay_advanced extends abstract_payment_module {
             include(DIR_FS_CATALOG . DIR_WS_CLASSES . 'quickpay_order.php');
         }
 
+        file_put_contents('qp-api.log', 'eroare_qpa_1', FILE_APPEND);
+        file_put_contents('qp-api.log', print_r($order,TRUE), FILE_APPEND);
+        file_put_contents('qp-api.log', 'eroare_qpa_1_oid', FILE_APPEND);
+        file_put_contents('qp-api.log', $order_id, FILE_APPEND);
+
         if (!($order instanceof quickpay_order)) {
             $order = new quickpay_order($order);
         }
+
+        file_put_contents('qp-api.log', 'eroare_qpa_2', FILE_APPEND);
+        file_put_contents('qp-api.log', print_r($order,TRUE), FILE_APPEND);
 
         /** For debugging with FireBug / FirePHP */
         global $firephp;
@@ -631,7 +642,7 @@ class quickpay_advanced extends abstract_payment_module {
         ];
         tep_db_perform('orders_status_history', $sql_data);
 
-        include 'includes/modules/checkout/after.php';
+        $GLOBALS['hooks']->register_pipeline('after');
 
         /** Load the after_process function from the payment modules */
         $this->after_process();
@@ -646,7 +657,7 @@ class quickpay_advanced extends abstract_payment_module {
         tep_session_unregister('cart_QuickPay_ID');
         tep_session_unregister('qlink');
 
-        include 'includes/modules/checkout/reset.php';
+        $GLOBALS['hooks']->register_pipeline('reset');
         tep_redirect(tep_href_link(FILENAME_CHECKOUT_SUCCESS, '', 'SSL'));
         require 'includes/application_bottom.php';
     }

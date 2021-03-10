@@ -10,42 +10,37 @@
  * author: Genuineq office@genuineq.com
  */
 
-if (!defined('TABLE_ORDERS')) define('TABLE_ORDERS', 'orders');
+class quickpay_order extends order
+{
+    /* CAUTION - unlike parent constructor, this takes a populated order object */
+    public function __construct($order)
+    {
+        $order_id = $order->id;
 
-class quickpay_order extends order {
-    public $info, $totals, $products, $customer, $delivery, $content_type;
-    public $order_id;
-
-    // CAUTION - unlike parent constructor, this takes a populated order object
-    function __construct(order $order) {
-        parent::__construct($order);
-        global $order_id; // order class doesn't hold order id - check it's set in context!
+        /* Check if valid id */
         if (!(int)$order_id > 0) {
-            if (! isset($_GET['oID']) && (int)$_GET['oID'] > 0)
-                return false;
-            $order_id = (int)$_GET['oID'];
+            return false;
         }
 
+        /* Init inheritance */
+        parent::__construct($order_id);
+
+        /* Copy prepopulated data */
         foreach (get_object_vars($order) as $key => $value) {
-            if (is_object($value) || (is_array($value))) {
-                $this->$key = $value;
-            } else {
-                $this->$key = unserialize(serialize($value));
-            }
+            $this->$key = $value;
         }
 
         $this->id_query($order_id);
     }
 
-    function id_query($order_id) {
-        global $languages_id;
-
+    /* Decorate the object */
+    public function id_query($order_id)
+    {
         $order_id = tep_db_prepare_input($order_id);
-        $order_query = tep_db_query("select cc_transactionid, cc_cardhash, cc_cardtype from " . TABLE_ORDERS . " where orders_id = '" . (int)$order_id . "'");
+        $order_query = tep_db_query("select cc_transactionid, cc_cardhash, cc_cardtype from orders where orders_id = '" . (int)$order_id . "'");
         $order = tep_db_fetch_array($order_query);
         $this->info['cc_transactionid'] = $order['cc_transactionid'];
         $this->info['cc_cardhash'] = $order['cc_cardhash'];
         $this->info['cc_cardtype'] = $order['cc_cardtype'];
     }
 }
-?>
