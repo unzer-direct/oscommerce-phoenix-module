@@ -12,7 +12,7 @@
 
 if (!defined('TABLE_ORDERS')) define('TABLE_ORDERS', 'orders');
 
-class quickpay_order extends order {
+class unzer_order extends order {
     public $info, $totals, $products, $customer, $delivery, $content_type;
     public $order_id;
 

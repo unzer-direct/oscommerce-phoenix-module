@@ -10,7 +10,7 @@
  * author: Genuineq office@genuineq.com
  */
 
-class quickpay_order extends order
+class unzer_order extends order
 {
     /* CAUTION - unlike parent constructor, this takes a populated order object */
     public function __construct($order)
