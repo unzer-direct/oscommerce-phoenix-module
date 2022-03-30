@@ -902,6 +902,8 @@ class unzer_advanced extends abstract_payment_module {
             case 'swish': return MODULE_PAYMENT_UNZER_ADVANCED_SWISH_TEXT;
             case 'trustly': return MODULE_PAYMENT_UNZER_ADVANCED_TRUSTLY_TEXT;
             case 'klarna': return MODULE_PAYMENT_UNZER_ADVANCED_KLARNA_TEXT;
+            case 'apple-pay': return MODULE_PAYMENT_UNZER_ADVANCED_APPLE_PAY_TEXT;
+            case 'google-pay': return MODULE_PAYMENT_UNZER_ADVANCED_GOOGLE_PAY_TEXT;
 
             case 'maestro': return MODULE_PAYMENT_UNZER_ADVANCED_MAESTRO_TEXT;
             case 'ideal': return MODULE_PAYMENT_UNZER_ADVANCED_IDEAL_TEXT;
