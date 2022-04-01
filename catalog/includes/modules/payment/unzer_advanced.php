@@ -171,7 +171,7 @@ class unzer_advanced extends abstract_payment_module {
 
     /* Define payment method selector on checkout page */
     public function selection() {
-        global $order, $currencies, $unzer_card, $cardlock;
+        global $order, $currencies, $unzer_card, $cardlock, $language;
         $qty_groups = 0;
 
         /** Count how many MODULE_PAYMENT_UNZER_ADVANCED_GROUP are configured. */
