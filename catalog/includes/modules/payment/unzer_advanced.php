@@ -10,6 +10,9 @@
  * author: Genuineq office@genuineq.com
  */
 
+/** Module version. */
+define('MODULE_VERSION', '1.0.4');
+
 /** Compatibility fixes */
 if (!defined('DIR_WS_CLASSES')) define('DIR_WS_CLASSES','includes/classes/');
 if (!defined('DIR_WS_CATALOG_IMAGES')) define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
@@ -285,6 +288,14 @@ class unzer_advanced extends abstract_payment_module {
                             }elseif(file_exists(DIR_WS_ICONS . $option . "_payment.gif")){
                               $icon = DIR_WS_ICONS . $option . "_payment.gif";
                             }
+
+                            /**
+                             * Custom check for german language to add icon with german text
+                             */
+                            if ('german' == $language && 'unzer-pay-later-invoice' == $option) {
+                                $icon = (file_exists(DIR_WS_ICONS.$option."_DE_payment.png") ? DIR_WS_ICONS.$option."_DE_payment.png" : $icon);
+                            }
+
                             $space = 5;
 
                             //define payment icon width
@@ -540,7 +551,7 @@ class unzer_advanced extends abstract_payment_module {
 
             'shopsystem' => [
                 'name' => "OsCommerce Phoenix",
-                'version' => "1.0.2"
+                'version' => MODULE_VERSION
             ]
         ];
 
@@ -904,6 +915,7 @@ class unzer_advanced extends abstract_payment_module {
             case 'klarna': return MODULE_PAYMENT_UNZER_ADVANCED_KLARNA_TEXT;
             case 'apple-pay': return MODULE_PAYMENT_UNZER_ADVANCED_APPLE_PAY_TEXT;
             case 'google-pay': return MODULE_PAYMENT_UNZER_ADVANCED_GOOGLE_PAY_TEXT;
+            case 'unzer-pay-later-invoice': return MODULE_PAYMENT_UNZER_ADVANCED_DIRECT_INVOICE_TEXT;
 
             case 'maestro': return MODULE_PAYMENT_UNZER_ADVANCED_MAESTRO_TEXT;
             case 'ideal': return MODULE_PAYMENT_UNZER_ADVANCED_IDEAL_TEXT;
