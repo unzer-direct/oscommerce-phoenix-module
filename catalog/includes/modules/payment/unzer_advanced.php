@@ -11,7 +11,7 @@
  */
 
 /** Module version. */
-define('MODULE_VERSION', '1.0.4');
+define('MODULE_VERSION', '1.0.5');
 
 /** Compatibility fixes */
 if (!defined('DIR_WS_CLASSES')) define('DIR_WS_CLASSES','includes/classes/');
@@ -272,6 +272,17 @@ class unzer_advanced extends abstract_payment_module {
                         $selectedopts = explode(",", $option);
                         $icon = "";
                         foreach($selectedopts as $option){
+
+                            /**
+                             * Check if the option is "sofort" & if the order currency is NOT one of the following.
+                             * Skip this option if its true
+                             *
+                             * !!! HARDCODED currencies !!!
+                             */
+                            if ('sofort' == $option && !in_array($order->info['currency'], ['EUR', 'GBP', 'PLN', 'CHF'])) {
+                                continue;
+                            }
+
                             $optscount++;
 
                             $icon = "";
@@ -294,6 +305,11 @@ class unzer_advanced extends abstract_payment_module {
                              */
                             if ('german' == $language && 'unzer-pay-later-invoice' == $option) {
                                 $icon = (file_exists(DIR_WS_ICONS.$option."_DE_payment.png") ? DIR_WS_ICONS.$option."_DE_payment.png" : $icon);
+                            }
+
+                            /** Make icon larger for "sofort" payment method, as it is for others. */
+                            if ('sofort' == $option) {
+                                $icon = (file_exists(DIR_WS_ICONS.$option."_payment.png") ? DIR_WS_ICONS.$option."_payment.png" : $icon);
                             }
 
                             $space = 5;

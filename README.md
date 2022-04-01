@@ -2,7 +2,7 @@
 Unzer payment module for osCommerce Phoenix
 Modular package.
 
-Version 1.0.4 - 01.04.2022
+Version 1.0.5 - 01.04.2022
 
 Compatibility:
 Unzer API v10 with
@@ -18,6 +18,8 @@ Support thread on osCommerce forums:
 https://forums.oscommerce.com/topic/412146-unzer-payment-module-for-23/
 
 Changelog
+#### 1.0.5
+- Added Sofort payment method
 #### 1.0.4
 - Added Unzer Direct Invoice payment method
 #### 1.0.3
