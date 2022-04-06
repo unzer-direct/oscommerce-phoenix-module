@@ -10,6 +10,9 @@
  * author: Genuineq office@genuineq.com
  */
 
+/** Module version. */
+define('MODULE_VERSION', '1.0.5');
+
 /** Compatibility fixes */
 if (!defined('DIR_WS_CLASSES')) define('DIR_WS_CLASSES','includes/classes/');
 if (!defined('DIR_WS_CATALOG_IMAGES')) define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
@@ -168,7 +171,7 @@ class unzer_advanced extends abstract_payment_module {
 
     /* Define payment method selector on checkout page */
     public function selection() {
-        global $order, $currencies, $unzer_card, $cardlock;
+        global $order, $currencies, $unzer_card, $cardlock, $language;
         $qty_groups = 0;
 
         /** Count how many MODULE_PAYMENT_UNZER_ADVANCED_GROUP are configured. */
@@ -269,6 +272,17 @@ class unzer_advanced extends abstract_payment_module {
                         $selectedopts = explode(",", $option);
                         $icon = "";
                         foreach($selectedopts as $option){
+
+                            /**
+                             * Check if the option is "sofort" & if the order currency is NOT one of the following.
+                             * Skip this option if its true
+                             *
+                             * !!! HARDCODED currencies !!!
+                             */
+                            if ('sofort' == $option && !in_array($order->info['currency'], ['EUR', 'GBP', 'PLN', 'CHF'])) {
+                                continue;
+                            }
+
                             $optscount++;
 
                             $icon = "";
@@ -285,6 +299,19 @@ class unzer_advanced extends abstract_payment_module {
                             }elseif(file_exists(DIR_WS_ICONS . $option . "_payment.gif")){
                               $icon = DIR_WS_ICONS . $option . "_payment.gif";
                             }
+
+                            /**
+                             * Custom check for german language to add icon with german text
+                             */
+                            if ('german' == $language && 'unzer-pay-later-invoice' == $option) {
+                                $icon = (file_exists(DIR_WS_ICONS.$option."_DE_payment.png") ? DIR_WS_ICONS.$option."_DE_payment.png" : $icon);
+                            }
+
+                            /** Make icon larger for "sofort" payment method, as it is for others. */
+                            if ('sofort' == $option) {
+                                $icon = (file_exists(DIR_WS_ICONS.$option."_payment.png") ? DIR_WS_ICONS.$option."_payment.png" : $icon);
+                            }
+
                             $space = 5;
 
                             //define payment icon width
@@ -540,7 +567,7 @@ class unzer_advanced extends abstract_payment_module {
 
             'shopsystem' => [
                 'name' => "OsCommerce Phoenix",
-                'version' => "1.0.2"
+                'version' => MODULE_VERSION
             ]
         ];
 
@@ -902,6 +929,9 @@ class unzer_advanced extends abstract_payment_module {
             case 'swish': return MODULE_PAYMENT_UNZER_ADVANCED_SWISH_TEXT;
             case 'trustly': return MODULE_PAYMENT_UNZER_ADVANCED_TRUSTLY_TEXT;
             case 'klarna': return MODULE_PAYMENT_UNZER_ADVANCED_KLARNA_TEXT;
+            case 'apple-pay': return MODULE_PAYMENT_UNZER_ADVANCED_APPLE_PAY_TEXT;
+            case 'google-pay': return MODULE_PAYMENT_UNZER_ADVANCED_GOOGLE_PAY_TEXT;
+            case 'unzer-pay-later-invoice': return MODULE_PAYMENT_UNZER_ADVANCED_DIRECT_INVOICE_TEXT;
 
             case 'maestro': return MODULE_PAYMENT_UNZER_ADVANCED_MAESTRO_TEXT;
             case 'ideal': return MODULE_PAYMENT_UNZER_ADVANCED_IDEAL_TEXT;
